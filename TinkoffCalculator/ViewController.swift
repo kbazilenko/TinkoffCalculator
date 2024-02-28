@@ -113,6 +113,27 @@ class ViewController: UIViewController {
         calculatorHistory.removeAll()
     }
     
+    @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "CALCULATIONS_LIST",
+                let calculationsListVC = segue.destination as? CalculationsListViewController else { return }
+        calculationsListVC.result = label.text
+    }
+    
+    
+    @IBAction func showCalculationsList(_ sender: Any) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let calculationListVC = sb.instantiateViewController(identifier: "CalculationsListViewController")
+        if let vc = calculationListVC as? CalculationsListViewController {
+            vc.result = label.text
+        }
+        
+        show(calculationListVC, sender: self)
+    }
+    
     @IBOutlet weak var label: UILabel!
     
     var calculatorHistory: [CalculationHistoryItem] = []
